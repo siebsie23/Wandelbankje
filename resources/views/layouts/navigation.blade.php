@@ -28,6 +28,7 @@
             </div>
 
             <!-- Settings Dropdown -->
+            @if(isset(Auth::user()->name))
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -56,6 +57,7 @@
                     </x-slot>
                 </x-dropdown>
             </div>
+            @endif
         </div>
     </div>
 
@@ -78,6 +80,7 @@
                 </x-responsive-nav-link>
 
                 <!-- Responsive Settings Options -->
+                @if(isset(Auth::user()->name))
                 <div class="pt-4 pb-1 border-t border-white">
                     <div class="px-4">
                         <div class="font-medium text-base text-white">{{ Auth::user()->name }}</div>
@@ -97,6 +100,7 @@
                         </form>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
 </nav>
