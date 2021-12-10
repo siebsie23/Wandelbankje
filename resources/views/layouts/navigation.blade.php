@@ -21,9 +21,21 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
+                        {{ __('Bankjes in je omgeving') }}
+                    </x-nav-link>
+                    @if(isset(Auth::user()->name))
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('admin_dashboard')||request()->routeIs('moderator_dashboard')||request()->routeIs('user_dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @else
+                    <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                        {{ __('Inloggen') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                        {{ __('Registreren') }}
+                    </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -75,9 +87,14 @@
                         </button>
                     </div>
                 </div>
+                <x-responsive-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
+                    {{ __('Bankjes in je omgeving') }}
+                </x-responsive-nav-link>
+                @if(isset(Auth::user()->name))
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
+                @endif
 
                 <!-- Responsive Settings Options -->
                 @if(isset(Auth::user()->name))
@@ -100,6 +117,14 @@
                         </form>
                     </div>
                 </div>
+                @else
+                    <hr/>
+                    <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                        {{ __('Inloggen') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                        {{ __('Registreren') }}
+                    </x-responsive-nav-link>
                 @endif
             </div>
         </div>
