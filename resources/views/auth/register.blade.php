@@ -12,6 +12,9 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
+            <!-- Default role -->
+            <input type="hidden" name="role" value="user" />
+
             <!-- Name -->
             <div>
                 <x-label for="name" :value="__('Name')" />
