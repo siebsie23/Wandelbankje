@@ -36,4 +36,7 @@ Route::get('/admin_dashboard', 'App\Http\Controllers\Admin\DashboardController@i
 Route::get('/moderator_dashboard', 'App\Http\Controllers\Moderator\DashboardController@index')->middleware('role:moderator')->name('moderator_dashboard');
 Route::get('/user_dashboard', 'App\Http\Controllers\User\DashboardController@index')->middleware('role:user')->name('user_dashboard');
 
+// Bench Controller
+Route::get('/get-benches-area/{latitude}/{longitude}', 'App\Http\Controllers\BenchController@benchesInArea');
+
 require __DIR__.'/auth.php';
