@@ -21,11 +21,25 @@ class BenchSeeder extends Seeder
         $json = File::get('database/data/bankjes.json');
         $benches = json_decode($json, true);
 
+        $insert_data = [];
+
         foreach($benches['elements'] as $key => $value) {
-            DB::table('benches')->insert([
+            if(!isset($value['lat']) || !isset($value['lon']))
+                continue;
+            $data = [
                 'latitude' => $value['lat'],
                 'longitude' => $value['lon'],
-            ]);
+            ];
+
+            $insert_data[] = $data;
+        }
+
+        $insert_data = collect($insert_data);
+
+        $chunks = $insert_data->chunk(5000);
+
+        foreach($chunks as $chunk) {
+            DB::table('benches')->insert($chunk->toArray());
         }
     }
 }
