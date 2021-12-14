@@ -15,7 +15,6 @@ $(document).ready(function() {
                     accessToken: 'sk.eyJ1Ijoic2llYnNpZTIzIiwiYSI6ImNreDRmeXRlajI5ajQybnA4cWpzcWNoMnIifQ.vMunAm-ZN4Qq5hZ-4153CA'
                 }).addTo(map);
 
-                console.log(response);
                 var markers = L.markerClusterGroup();
                 for(let i = 0; i < response.length; i++) {
                     var marker;
@@ -23,7 +22,6 @@ $(document).ready(function() {
                     marker.bindPopup("Dit is een test popup");
                 }
                 map.addLayer(markers);
-
             }
         });
     })

@@ -19,7 +19,7 @@ class BenchController extends Controller
                                     )
                                 ) AS distance
                                 FROM benches
-                                HAVING distance < 50000
+                                HAVING distance < 5
                                 ORDER BY distance
                                 LIMIT 0 , 20;"));
         return response()->json($benches, 200);
