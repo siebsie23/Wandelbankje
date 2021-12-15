@@ -1,6 +1,7 @@
 $(document).ready(function() {
     let last_position = null;
     let map = null;
+    var markermap = {};
     var markers = L.markerClusterGroup();
     updateCoordinate(function(position) {
         map = L.map('map').setView([position.latitude, position.longitude], 13);
@@ -35,10 +36,12 @@ $(document).ready(function() {
             url: 'get-benches-area/' + position.latitude + '/' + position.longitude,
             success: function(response) {
                 markers.clearLayers();
+                markermap = {};
                 for(let i = 0; i < response.length; i++) {
                     var marker;
                     markers.addLayer(marker = L.marker([response[i]['latitude'], response[i]['longitude']]));
                     marker.bindPopup("Dit is een test popup");
+                    markermap[i] = marker;
                 }
                 map.fitBounds(markers.getBounds(), {padding: [20, 20]});
                 updateList(response);
@@ -53,7 +56,7 @@ $(document).ready(function() {
             benchlist.append('<li>\n' +
                 '                                        <div class="px-4 py-4 sm:px-6">\n' +
                 '                                            <div class="flex items-center justify-between">\n' +
-                '                                                <p class="truncate">Naam Bankje</p>\n' +
+                '                                                <a href="#zoombench" markerId="' + i + '" lat="' + benches[i]['latitude'] + '" lon="' + benches[i]['longitude'] + '"><p class="truncate">Bankje</p></a>\n' +
                 '                                                <div class="ml-2 flex-shrink-0 flex">\n' +
                 '                                                    <button class="ml-1 mr-1 p-2 pl-5 pr-5 transition-colors duration-700 transform bg-indigo-500 hover:bg-blue-400 text-gray-100 text-lg rounded-lg focus:border-4 border-indigo-300">Details</button>\n' +
                 '                                                    <a target="_blank" href="https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=' + benches[i]['latitude'] + ',' + benches[i]['longitude'] + '" class="ml-1 mr-1 p-2 pl-5 pr-5 transition-colors duration-700 transform bg-red-500 hover:bg-red-400 text-gray-100 text-lg rounded-lg focus:border-4 border-red-300">Navigeren</a>\n' +
@@ -69,6 +72,18 @@ $(document).ready(function() {
                 '                                        </div>\n' +
                 '                                </li>')
         }
+        $('a[href="#zoombench"]').click(function() {
+            map.flyTo([$(this).attr('lat'), $(this).attr('lon')], 18)
+            highlightLocationId($(this).attr('markerId'));
+        });
+    }
+
+    function highlightLocationId(id) {
+        var marker = markermap[id];
+
+        if (!marker) { return; }
+
+        marker.openPopup();
     }
 
 });
