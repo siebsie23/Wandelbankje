@@ -2,8 +2,8 @@ $(document).ready(function() {
     let last_position = null;
     let map = null;
     let zoomendpopup = null;
-    var markermap = {};
-    var markers = L.markerClusterGroup();
+    let markermap = {};
+    let markers = L.markerClusterGroup();
     updateCoordinate(function(position) {
         map = L.map('map').setView([position.latitude, position.longitude], 13);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -44,7 +44,7 @@ $(document).ready(function() {
                 markers.clearLayers();
                 markermap = {};
                 for(let i = 0; i < response.length; i++) {
-                    var marker;
+                    let marker;
                     markers.addLayer(marker = L.marker([response[i]['latitude'], response[i]['longitude']]));
                     marker.bindPopup("Dit is een test popup");
                     markermap[i] = marker;
@@ -87,7 +87,7 @@ $(document).ready(function() {
     function highlightLocationId(id) {
         if(id == null)
             return;
-        var marker = markermap[id];
+        let marker = markermap[id];
 
         if (!marker) { return; }
 
