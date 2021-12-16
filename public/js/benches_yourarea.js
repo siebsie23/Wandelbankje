@@ -1,6 +1,7 @@
 $(document).ready(function() {
     let last_position = null;
     let map = null;
+    let zoomendpopup = null;
     var markermap = {};
     var markers = L.markerClusterGroup();
     updateCoordinate(function(position) {
@@ -17,6 +18,11 @@ $(document).ready(function() {
         updateCoordinate(function(position) {
             last_position = position;
             updateMarkers(position);
+        })
+
+        // register map event
+        map.on('zoomend', function() {
+            highlightLocationId(zoomendpopup);
         })
     });
 
@@ -74,16 +80,19 @@ $(document).ready(function() {
         }
         $('a[href="#zoombench"]').click(function() {
             map.flyTo([$(this).attr('lat'), $(this).attr('lon')], 18)
-            highlightLocationId($(this).attr('markerId'));
+            zoomendpopup = $(this).attr('markerId');
         });
     }
 
     function highlightLocationId(id) {
+        if(id == null)
+            return;
         var marker = markermap[id];
 
         if (!marker) { return; }
 
         marker.openPopup();
+        zoomendpopup = null;
     }
 
 });
