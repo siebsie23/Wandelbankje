@@ -75,7 +75,7 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="bg-red-500 fixed w-full h-full top-0 left-0 flex justify-center">
+        <div class="bg-red-500 fixed w-full h-full top-0 left-0 flex justify-center z-10">
             <div class="pt-2 pb-3 w-full space-y-1 text-center justify-center">
                 <div class="flex-shrink-0 flex items-center text-white text-xl">
                     <div class="-mr-2 flex items-center sm:hidden">
