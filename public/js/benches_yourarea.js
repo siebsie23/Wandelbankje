@@ -1,6 +1,7 @@
 $(document).ready(function() {
     let last_position = null;
     let map = null;
+    let zoomendpopup = null;
     let markermap = {};
     let benchNameMap = {};
     let markers = L.markerClusterGroup();
@@ -17,6 +18,11 @@ $(document).ready(function() {
         markers.addTo(map);
         last_position = position;
         updateMarkers(position);
+
+        // register map event
+        map.on('zoomend', function() {
+            highlightLocationId(zoomendpopup);
+        })
     });
 
     //Update location every 5 seconds.
@@ -76,15 +82,19 @@ $(document).ready(function() {
         $('a[href="#zoombench"]').click(function() {
             map.flyTo([$(this).attr('lat'), $(this).attr('lon')], 18)
             highlightLocationId($(this).attr('markerId'));
+            zoomendpopup = $(this).attr('markerId');
         });
     }
 
     function highlightLocationId(id) {
+        if(id == null)
+            return;
         var marker = markermap[id];
 
         if (!marker) { return; }
 
         marker.openPopup();
+        zoomendpopup = null;
     }
 
 });
