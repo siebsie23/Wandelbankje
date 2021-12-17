@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BenchController;
+use App\Http\Controllers\Bankjeslocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
