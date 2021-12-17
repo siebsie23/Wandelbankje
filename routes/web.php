@@ -41,5 +41,6 @@ Route::get('/user_dashboard', 'App\Http\Controllers\User\DashboardController@ind
 
 // Bench Controller
 Route::get('/get-benches-area/{latitude}/{longitude}', 'App\Http\Controllers\BenchController@benchesInArea');
+Route::get('/get-reverse-address/{latitude}/{longitude}', 'App\Http\Controllers\BenchController@getReverseLocation');
 
 require __DIR__.'/auth.php';
