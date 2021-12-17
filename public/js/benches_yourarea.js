@@ -3,6 +3,7 @@ $(document).ready(function() {
     let map = null;
     let zoomendpopup = null;
     let markermap = {};
+    let benchNameMap = {};
     let markers = L.markerClusterGroup();
     updateCoordinate(function(position) {
         map = L.map('map').setView([position.latitude, position.longitude], 13);
@@ -15,10 +16,8 @@ $(document).ready(function() {
             accessToken: 'sk.eyJ1Ijoic2llYnNpZTIzIiwiYSI6ImNreDRmeXRlajI5ajQybnA4cWpzcWNoMnIifQ.vMunAm-ZN4Qq5hZ-4153CA'
         }).addTo(map);
         markers.addTo(map);
-        updateCoordinate(function(position) {
-            last_position = position;
-            updateMarkers(position);
-        })
+        last_position = position;
+        updateMarkers(position);
 
         // register map event
         map.on('zoomend', function() {
@@ -43,10 +42,12 @@ $(document).ready(function() {
             success: function(response) {
                 markers.clearLayers();
                 markermap = {};
+                benchNameMap = {};
                 for(let i = 0; i < response.length; i++) {
+                    benchNameMap[i] = reverseLocation(response[i]['latitude'], response[i]['longitude']);
                     let marker;
                     markers.addLayer(marker = L.marker([response[i]['latitude'], response[i]['longitude']]));
-                    marker.bindPopup("Dit is een test popup");
+                    marker.bindPopup(benchNameMap[i]['results'][0]['formatted_address']);
                     markermap[i] = marker;
                 }
                 map.fitBounds(markers.getBounds(), {padding: [20, 20]});
@@ -62,7 +63,7 @@ $(document).ready(function() {
             benchlist.append('<li>\n' +
                 '                                        <div class="px-4 py-4 sm:px-6">\n' +
                 '                                            <div class="flex items-center justify-between">\n' +
-                '                                                <a href="#zoombench" markerId="' + i + '" lat="' + benches[i]['latitude'] + '" lon="' + benches[i]['longitude'] + '"><p class="truncate">Bankje</p></a>\n' +
+                '                                                <a href="#zoombench" markerId="' + i + '" lat="' + benches[i]['latitude'] + '" lon="' + benches[i]['longitude'] + '"><p class="truncate">Bankje in ' + benchNameMap[i]['results'][0]['address_components']['name'] + '</p></a>\n' +
                 '                                                <div class="ml-2 flex-shrink-0 flex">\n' +
                 '                                                    <button class="ml-1 mr-1 p-2 pl-5 pr-5 transition-colors duration-700 transform bg-indigo-500 hover:bg-blue-400 text-gray-100 text-lg rounded-lg focus:border-4 border-indigo-300">Details</button>\n' +
                 '                                                    <a target="_blank" href="https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=' + benches[i]['latitude'] + ',' + benches[i]['longitude'] + '" class="ml-1 mr-1 p-2 pl-5 pr-5 transition-colors duration-700 transform bg-red-500 hover:bg-red-400 text-gray-100 text-lg rounded-lg focus:border-4 border-red-300">Navigeren</a>\n' +
@@ -80,6 +81,7 @@ $(document).ready(function() {
         }
         $('a[href="#zoombench"]').click(function() {
             map.flyTo([$(this).attr('lat'), $(this).attr('lon')], 18)
+            highlightLocationId($(this).attr('markerId'));
             zoomendpopup = $(this).attr('markerId');
         });
     }
@@ -87,7 +89,7 @@ $(document).ready(function() {
     function highlightLocationId(id) {
         if(id == null)
             return;
-        let marker = markermap[id];
+        var marker = markermap[id];
 
         if (!marker) { return; }
 

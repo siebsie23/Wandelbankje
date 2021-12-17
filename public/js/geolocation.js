@@ -31,3 +31,17 @@ function toRad(Value)
 {
     return Value * Math.PI / 180;
 }
+
+function reverseLocation(lat, lon) {
+    const item = localStorage.getItem(lat + lon);
+    if(item != null)
+        return JSON.parse(item);
+    $.ajax({
+        type: 'GET',
+        url: 'get-reverse-address/' + lat + '/' + lon,
+        success: function(response) {
+            localStorage.setItem(lat + lon, response);
+            return JSON.parse(response);
+        }
+    });
+}

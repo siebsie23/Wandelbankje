@@ -2,11 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BenchController extends Controller
 {
+
+    public function getReverseLocation($latitude, $longitude) {
+        $api_key = env('GEOKEO_API');
+        $url = 'https://geokeo.com/geocode/v1/reverse.php?lat=' . $latitude . '&lng=' . $longitude . '&api=' . $api_key;
+        $client = new Client();
+        $res = $client->get($url);
+
+        echo $res->getBody();
+    }
+
     public function benchesInArea($latitude, $longitude, $amount = 5, $json = true) {
         $benches = DB::select(DB::raw("SELECT
                                     id, latitude, longitude, (
