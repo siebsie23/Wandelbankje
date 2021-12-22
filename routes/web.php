@@ -23,8 +23,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/details/{latitude}/{longitude}', function() {
-    return view('bench.details');
+Route::get('/details/{latitude}/{longitude}', function($latitude, $longitude) {
+    return view('bench.details')->with('bench', BenchController::getBenchAtCoordinates($latitude, $longitude))
+        ->with('address', BenchController::getReverseLocationAddress($latitude, $longitude));
 })->name('details');
 
 // Only accessible by registered users.
