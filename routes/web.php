@@ -18,10 +18,16 @@ use Stevebauman\Location\Facades\Location;
 |
 */
 
+// Pages accessible by unregistered users.
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::get('/details/{latitude}/{longitude}', function() {
+    return view('bench.details');
+})->name('details');
+
+// Only accessible by registered users.
 Route::get('/dashboard', function () {
     $role = Auth::user()->role;
     switch($role) {
@@ -42,6 +48,7 @@ Route::get('/user_dashboard', 'App\Http\Controllers\User\DashboardController@ind
 
 //bankjes toevoegen
 Route::view('/bankjestoevoegen', 'bankjestoevoegen');
+
 // Bench Controller
 Route::get('/get-benches-area/{latitude}/{longitude}', 'App\Http\Controllers\BenchController@benchesInArea');
 Route::get('/get-reverse-address/{latitude}/{longitude}', 'App\Http\Controllers\BenchController@getReverseLocation');
