@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BenchController;
 use App\Http\Controllers\Bankjeslocation;
+use App\Models\Bench;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,9 +24,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/details/{latitude}/{longitude}', function($latitude, $longitude) {
-    return view('bench.details')->with('bench', BenchController::getBenchAtCoordinates($latitude, $longitude))
-        ->with('address', BenchController::getReverseLocationAddress($latitude, $longitude));
+Route::get('/details/{id}', function($id) {
+    $bench = Bench::find($id);
+    return view('bench.details')->with('bench', $bench)
+        ->with('address', BenchController::getReverseLocationAddress($bench->latitude, $bench->longitude));
 })->name('details');
 
 // Only accessible by registered users.
