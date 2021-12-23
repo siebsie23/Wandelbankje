@@ -48,7 +48,7 @@ $(document).ready(function() {
                     markers.addLayer(marker = L.marker([response[i]['latitude'], response[i]['longitude']]));
                     reverseLocation(response[i]['latitude'], response[i]['longitude'], function(value) {
                         benchNameMap[i] = value;
-                        marker.bindPopup(benchNameMap[i]['results'][0]['formatted_address']);
+                        marker.bindPopup(benchNameMap[i]['results'][0]['formatted_address'] + ' - <a href="/details/' + response[i]['id'] + '">Details</a>');
                         updateList(response);
                     });
                     markermap[i] = marker;
