@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ReportedBench;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
@@ -63,5 +64,21 @@ class BenchController extends Controller
 
     public function getBenchAtCoordinates($latitude, $longitude) {
         return DB::table('benches')->where('latitude', $latitude)->where('longitude', $longitude)->first();
+    }
+
+    public function report(Request $request, $id) {
+        $reportedbench = ReportedBench::where('bench', $id)->where('reason', $request->radio);
+        if(!$reportedbench->exists()) {
+            ReportedBench::create([
+                'bench' => $id,
+                'reason' => $request->radio,
+                'amount_reported' => 1,
+            ]);
+        }else {
+            $reportedbench = $reportedbench->first();
+            $reportedbench->amount_reported = $reportedbench->amount_reported + 1;
+            $reportedbench->save();
+        }
+        return redirect(route('bench.details', $id))->with('alert', 'Bankje succesvol gerapporteerd!');
     }
 }

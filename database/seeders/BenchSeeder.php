@@ -16,7 +16,9 @@ class BenchSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
         Bench::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
         $json = File::get('database/data/bankjes.json');
         $benches = json_decode($json, true);

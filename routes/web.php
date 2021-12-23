@@ -28,7 +28,16 @@ Route::get('/details/{id}', function($id) {
     $bench = Bench::find($id);
     return view('bench.details')->with('bench', $bench)
         ->with('address', BenchController::getReverseLocationAddress($bench->latitude, $bench->longitude));
-})->name('details');
+})->name('bench.details');
+
+Route::get('/report/{id}', function($id) {
+    $bench = Bench::find($id);
+    return view('bench.report')->with('bench', $bench)
+        ->with('address', BenchController::getReverseLocationAddress($bench->latitude, $bench->longitude));
+})->name('bench.report');
+
+Route::post('/report/{id}', [BenchController::class, 'report'])
+    ->name('bench.postreport');
 
 // Only accessible by registered users.
 Route::get('/dashboard', function () {
