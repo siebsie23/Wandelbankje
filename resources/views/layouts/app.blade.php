@@ -47,5 +47,7 @@
     <script src="{{ asset('js/geolocation.js') }}"></script>
     @if(Route::current()->getName() == 'welcome')
         <script src="{{ asset('js/benches_yourarea.js') }}"></script>
+    @elseif(Route::current()->getName() == 'global')
+        <script src="{{ asset('js/benches_global.js') }}"></script>
     @endif
 </html>

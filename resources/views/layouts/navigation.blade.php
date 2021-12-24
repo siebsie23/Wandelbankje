@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
                         {{ __('Bankjes in je omgeving') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('global')" :active="request()->routeIs('global')">
+                        {{ __('Alle bankjes') }}
+                    </x-nav-link>
                     @if(isset(Auth::user()->name))
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('admin_dashboard')||request()->routeIs('moderator_dashboard')||request()->routeIs('user_dashboard')">
                         {{ __('Dashboard') }}
@@ -89,6 +92,9 @@
                 </div>
                 <x-responsive-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
                     {{ __('Bankjes in je omgeving') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('global')" :active="request()->routeIs('global')">
+                    {{ __('Alle bankjes') }}
                 </x-responsive-nav-link>
                 @if(isset(Auth::user()->name))
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">

@@ -24,6 +24,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::get('/global', function () {
+    return view('globalbenches');
+})->name('global');
+
 Route::get('/details/{id}', function($id) {
     $bench = Bench::find($id);
     return view('bench.details')->with('bench', $bench)
@@ -63,6 +67,7 @@ Route::view('/bankjestoevoegen', 'bankjestoevoegen');
 
 // Bench Controller
 Route::get('/get-benches-area/{latitude}/{longitude}', 'App\Http\Controllers\BenchController@benchesInArea');
+Route::get('/get-benches-global/{latitude}/{longitude}', 'App\Http\Controllers\BenchController@benchesGlobal');
 Route::get('/get-reverse-address/{latitude}/{longitude}', 'App\Http\Controllers\BenchController@getReverseLocation');
 
 require __DIR__.'/auth.php';
