@@ -33,16 +33,10 @@ function toRad(Value)
 }
 
 function reverseLocation(lat, lon, callback) {
-    const item = localStorage.getItem(lat + lon);
-    if(item != null) {
-        callback(JSON.parse(item));
-        return;
-    }
     $.ajax({
         type: 'GET',
         url: 'get-reverse-address/' + lat + '/' + lon,
         success: function(response) {
-            localStorage.setItem(lat + lon, response);
             callback(JSON.parse(response));
         }
     });
