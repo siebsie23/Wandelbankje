@@ -15,7 +15,7 @@ class BenchController extends Controller
     public function getReverseLocation($latitude, $longitude) {
         $item = Cache::get('rawLocation' . $latitude . $longitude);
         if(isset($item)) {
-            echo $item->getBody();
+            echo $item;
             return;
         }
         $api_key = env('GEOKEO_API');
@@ -23,7 +23,7 @@ class BenchController extends Controller
         $client = new Client();
         $res = $client->get($url);
 
-        Cache::forever('rawLocation' . $latitude . $longitude, $res);
+        Cache::forever('rawLocation' . $latitude . $longitude, $res->getBody()->getContents());
 
         echo $res->getBody();
     }
@@ -45,7 +45,7 @@ class BenchController extends Controller
         $client = new Client();
         $res = $client->get($url);
         $json = json_decode($res->getBody(), JSON_PARTIAL_OUTPUT_ON_ERROR);
-        Cache::put('addressLocation' . $latitude . $longitude, $json);
+        Cache::forever('addressLocation' . $latitude . $longitude, $json);
         if(isset($json['results'][0]['address_components']['name']))
             $name = $json['results'][0]['address_components']['name'];
         if(isset($json['results'][0]['address_components']['subdistrict']))
