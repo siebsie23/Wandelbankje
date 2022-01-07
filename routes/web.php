@@ -34,6 +34,11 @@ Route::get('/details/{id}', function($id) {
         ->with('address', BenchController::getReverseLocationAddress($bench->latitude, $bench->longitude));
 })->name('bench.details');
 
+Route::get('/details/{id}/{like}', function($id, $like) {
+    $bench = Bench::find($id);
+    return $bench->addLike($id, $like);
+})->name('bench.like');
+
 Route::get('/report/{id}', function($id) {
     $bench = Bench::find($id);
     return view('bench.report')->with('bench', $bench)

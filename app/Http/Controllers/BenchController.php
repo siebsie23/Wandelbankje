@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LikedBench;
 use App\Models\ReportedBench;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 

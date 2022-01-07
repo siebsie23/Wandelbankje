@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBenches extends Migration
+class CreateLikedBenches extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateBenches extends Migration
      */
     public function up()
     {
-        Schema::create('benches', function (Blueprint $table) {
+        Schema::create('liked_benches', function (Blueprint $table) {
             $table->id();
-            $table->string('latitude');
-            $table->string('longitude');
+            $table->foreignId('user')->references('id')->on('users');
+            $table->foreignId('bench')->references('id')->on('benches');
+            $table->boolean('like')->default(false);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateBenches extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('benches');
+        Schema::dropIfExists('liked_benches');
     }
 }
