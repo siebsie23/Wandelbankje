@@ -38,7 +38,7 @@ class Bench extends Model
                 $likedbench->like = $like;
                 $likedbench->save();
             }
-            return redirect(route('bench.details', $id));
         }
+        return redirect(route('bench.details', $id));
     }
 }
