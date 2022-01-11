@@ -15,8 +15,8 @@ class CreateReportedBenchesTable extends Migration
     {
         Schema::create('reported_benches', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('bench')->references('id')->on('benches');
-            $table->foreignId('reason')->references('id')->on('report_reasons');
+            $table->foreignId('bench')->references('id')->on('benches')->onDelete('cascade');;
+            $table->foreignId('reason')->references('id')->on('report_reasons')->onDelete('cascade');;
             $table->integer('amount_reported');
             $table->timestamps();
         });

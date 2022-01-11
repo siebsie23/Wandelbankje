@@ -3,6 +3,7 @@
 use App\Http\Controllers\BenchController;
 use App\Http\Controllers\Bankjeslocation;
 use App\Models\Bench;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -67,13 +68,13 @@ Route::get('/moderator_dashboard', 'App\Http\Controllers\Moderator\DashboardCont
 Route::get('/user_dashboard', 'App\Http\Controllers\User\DashboardController@index')->middleware('role:user')->name('user_dashboard');
 
 // Admin Routes
-Route::get('/admin_dashboard', 'App\Http\Controllers\Admin\DashboardController@index')->middleware('role:admin')->name('admin_dashboard');
-Route::get('/admin_users', function() {
-   return view('admin.users');
-})->middleware('role:admin')->name('admin_users');
-Route::get('/admin_users_create', function() { })->middleware('role:admin')->name('admin_users_create');
-Route::get('/admin_users_edit/{id}', function() { })->middleware('role:admin')->name('admin_users_edit');
-Route::get('/admin_users_delete/{id}', function() { })->middleware('role:admin')->name('admin_users_delete');
+Route::group(['middleware' => 'role:admin'], function() {
+    Route::get('/admin_dashboard', 'App\Http\Controllers\Admin\DashboardController@index')->name('admin_dashboard');
+    Route::get('/admin_users', function() { return view('admin.users'); })->name('admin_users');
+    Route::get('/admin_users_edit/{id}', function($id) { return view('admin.users_edit')->with('user', User::find($id)); })->name('admin_users_edit');
+    Route::get('/admin_users_delete/{id}', function($id) { return view('admin.users_delete')->with('user', User::find($id)); })->name('admin_users_delete');
+    Route::delete('/admin_users_destroy/{id}', 'App\Http\Controllers\Auth\RegisteredUserController@destroy')->name('admin_users_destroy');
+});
 
 //bankjes toevoegen
 Route::view('/bankjestoevoegen', 'bankjestoevoegen');

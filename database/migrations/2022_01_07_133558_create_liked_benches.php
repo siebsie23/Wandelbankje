@@ -15,8 +15,8 @@ class CreateLikedBenches extends Migration
     {
         Schema::create('liked_benches', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user')->references('id')->on('users');
-            $table->foreignId('bench')->references('id')->on('benches');
+            $table->foreignId('user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('bench')->references('id')->on('benches')->onDelete('cascade');;
             $table->boolean('like')->default(false);
             $table->timestamps();
         });

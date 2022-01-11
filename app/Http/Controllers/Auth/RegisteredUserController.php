@@ -53,4 +53,37 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
+
+    /**
+     * Handle an incoming edit request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function edit(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'role' => ['required', 'string', 'max:255'],
+        ]);
+
+        $user = User::find($request->userId);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+        $user->save();
+
+        return redirect(route('admin_users'))->with('alert', 'Account succesvol bijgewerkt!');
+    }
+
+    public function destroy($id) {
+        $user = User::find($id);
+        if($user->delete()) {
+            return redirect(route('admin_users'))->with('alert', 'Account succesvol verwijderd!');
+        }
+        return back();
+    }
 }

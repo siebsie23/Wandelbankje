@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
         // \App\Models\User::factory(10)->create();
         $this->call(UserTableSeeder::class);
 
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
         DB::table('report_reasons')->truncate(); // Clear data to avoid duplicates.
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
         // Bankje bestaat niet
@@ -34,5 +34,8 @@ class DatabaseSeeder extends Seeder
         DB::table('report_reasons')->insert([
             'reason' => 'Ongepaste of onjuiste foto'
         ]);
+
+        // Fill database with benches
+        $this->call(BenchSeeder::class);
     }
 }
