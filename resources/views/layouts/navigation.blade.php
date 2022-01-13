@@ -31,6 +31,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('admin_dashboard')||request()->routeIs('moderator_dashboard')||request()->routeIs('user_dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                        <x-nav-link :href="route('bankjestoevoegen')" :active="request()->routeIs('bankjestoevoegen')">
+                            {{ __('Bankje toevoegen') }}
+                        </x-nav-link>
                         @if(Auth::user()->role == 'admin')
                             <x-nav-link :href="route('admin_users')" :active="request()->routeIs('admin_users')">
                                 {{ __('Gebruikers') }}
@@ -104,6 +107,12 @@
                 @if(isset(Auth::user()->name))
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('bankjestoevoegen')" :active="request()->routeIs('bankjestoevoegen')">
+                    {{ __('Bankje toevoegen') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin_users')" :active="request()->routeIs('admin_users')">
+                    {{ __('Gebruikers') }}
                 </x-responsive-nav-link>
                 @endif
 
