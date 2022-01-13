@@ -49,6 +49,9 @@ Route::get('/report/{id}', function($id) {
 Route::post('/report/{id}', [BenchController::class, 'report'])
     ->name('bench.postreport');
 
+Route::post('/add_bench', [BenchController::class, 'add_bench'])
+    ->name('bench.add');
+
 // Only accessible by registered users.
 Route::get('/dashboard', function () {
     $role = Auth::user()->role;
@@ -77,7 +80,7 @@ Route::group(['middleware' => 'role:admin'], function() {
 });
 
 //bankjes toevoegen
-Route::view('/bankjestoevoegen', 'bankjestoevoegen');
+Route::view('/bankjestoevoegen', 'bankjestoevoegen')->middleware('role:any')->name('bankjestoevoegen');
 
 // Bench Controller
 Route::get('/get-benches-area/{latitude}/{longitude}', 'App\Http\Controllers\BenchController@benchesInArea');

@@ -14,6 +14,8 @@ class Role {
         $user = Auth::user();
         if($user->role == $role)
             return $next($request);
+        else if($role == 'any')
+            return $next($request);
 
         return redirect('/');
     }

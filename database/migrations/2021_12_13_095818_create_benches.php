@@ -17,6 +17,8 @@ class CreateBenches extends Migration
             $table->id();
             $table->string('latitude');
             $table->string('longitude');
+            $table->foreignId('added_by')->nullable()->default(null)->references('id')->on('users')->onDelete('cascade');
+            $table->boolean('is_new')->default(true);
             $table->timestamps();
         });
     }

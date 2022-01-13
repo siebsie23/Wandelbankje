@@ -45,9 +45,15 @@
         </div>
     </body>
     <script src="{{ asset('js/geolocation.js') }}"></script>
-    @if(Route::current()->getName() == 'welcome')
-        <script src="{{ asset('js/benches_yourarea.js') }}"></script>
-    @elseif(Route::current()->getName() == 'global')
-        <script src="{{ asset('js/benches_global.js') }}"></script>
-    @endif
+    @switch(Route::current()->getName())
+        @case('welcome')
+            <script src="{{ asset('js/benches_yourarea.js') }}"></script>
+            @break
+        @case('global')
+            <script src="{{ asset('js/benches_global.js') }}"></script>
+            @break
+        @case('bankjestoevoegen')
+            <script src="{{ asset('js/add_bench.js') }}"></script>
+            @break
+    @endswitch
 </html>

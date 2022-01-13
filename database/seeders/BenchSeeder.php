@@ -31,6 +31,7 @@ class BenchSeeder extends Seeder
             $data = [
                 'latitude' => $value['lat'],
                 'longitude' => $value['lon'],
+                'is_new' => false,
             ];
 
             $insert_data[] = $data;

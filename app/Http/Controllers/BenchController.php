@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bench;
 use App\Models\LikedBench;
 use App\Models\ReportedBench;
 use GuzzleHttp\Client;
@@ -109,4 +110,14 @@ class BenchController extends Controller
         }
         return redirect(route('bench.details', $id))->with('alert', 'Bankje succesvol gerapporteerd!');
     }
+
+    public function add_bench(Request $request) {
+        Bench::create([
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'added_by' => Auth::id(),
+        ]);
+        return redirect(route('welcome'))->with('alert', 'Bankje succesvol toegevoegd!');
+    }
+
 }

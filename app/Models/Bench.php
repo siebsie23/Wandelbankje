@@ -14,6 +14,8 @@ class Bench extends Model
     protected $fillable = [
         'latitude',
         'longitude',
+        'added_by',
+        'is_new',
     ];
 
     public function getLikes($id, $like): int
