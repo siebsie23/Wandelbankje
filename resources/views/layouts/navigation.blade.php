@@ -111,9 +111,11 @@
                 <x-responsive-nav-link :href="route('bankjestoevoegen')" :active="request()->routeIs('bankjestoevoegen')">
                     {{ __('Bankje toevoegen') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('admin_users')" :active="request()->routeIs('admin_users')">
-                    {{ __('Gebruikers') }}
-                </x-responsive-nav-link>
+                @if(Auth::user()->role == 'admin')
+                    <x-responsive-nav-link :href="route('admin_users')" :active="request()->routeIs('admin_users')">
+                        {{ __('Gebruikers') }}
+                    </x-responsive-nav-link>
+                @endif
                 @endif
 
                 <!-- Responsive Settings Options -->
