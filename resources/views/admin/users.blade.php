@@ -16,22 +16,22 @@
             @endif
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="bg-white border-b border-gray-200">
-                    <table class="min-w-max w-full table-auto">
+                    <table class="w-full table-auto">
                         <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                            <th class="py-3 px-6 text-left">Naam</th>
-                            <th class="py-3 px-6 text-left">Email</th>
-                            <th class="py-3 px-6 text-left">Rol</th>
-                            <th class="py-3 px-6 text-center">Acties</th>
+                            <th class="py-2 pl-3 text-left">Naam</th>
+                            <th class="py-2 text-left">Email</th>
+                            <th class="py-2 text-left">Rol</th>
+                            <th class="py-2 pr-3 text-center">Acties</th>
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
                         @foreach(app\Models\User::all() as $user)
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                <td class="py-3 px-6 text-left whitespace-nowrap">{{ $user->name }}</td>
-                                <td class="py-3 px-6 text-left">{{ $user->email }}</td>
-                                <td class="py-3 px-6 text-left">{{ ucfirst($user->role) }}</td>
-                                <td class="py-3 px-6 text-center">
+                                <td class="py-2 pl-3 text-left whitespace-nowrap">{{ $user->name }}</td>
+                                <td class="py-2 text-left">{{ $user->email }}</td>
+                                <td class="py-2 text-left">{{ ucfirst($user->role) }}</td>
+                                <td class="py-2 pr-3 text-center">
                                     <div class="flex item-center justify-center">
                                         @if($user->id !== auth()->user()->id)
                                             <a href="{{ route('admin_users_edit', $user->id) }}">
