@@ -37,11 +37,13 @@ $(document).ready(function() {
         let popup = e.target.getPopup();
         let latlng = map.mouseEventToLatLng(e.originalEvent);
 
-        reverseLocation(latlng.lat, latlng.lng, function(value) {
-            let i = popup.getContent().split(' - ')[0];
-            popup.setContent(value['results'][0]['formatted_address'] + ' - <a href="/details/' + i + '">Details</a>');
-            popup.update();
-        });
+        if(popup.getContent().includes(' - Laden...')) {
+            reverseLocation(latlng.lat, latlng.lng, function(value) {
+                let i = popup.getContent().split(' - ')[0];
+                popup.setContent(value['results'][0]['formatted_address'] + ' - <a href="/details/' + i + '">Details</a>');
+                popup.update();
+            });
+        }
     }
 
     function updateMarkers(position) {
