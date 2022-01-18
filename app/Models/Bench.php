@@ -43,4 +43,17 @@ class Bench extends Model
         }
         return redirect(route('bench.details', $id));
     }
+
+    public function approveNew($id, $approve) {
+        $bench = Bench::find($id);
+        if($bench->is_new) {
+            if($approve) {
+                $bench->is_new = false;
+                $bench->save();
+            }else {
+                $bench->delete();
+            }
+        }
+        return redirect(route('moderator_new_items'));
+    }
 }

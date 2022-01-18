@@ -73,6 +73,11 @@ Route::get('/user_dashboard', 'App\Http\Controllers\User\DashboardController@ind
 // Moderator Routes
 Route::group(['middleware' => 'role:moderator'], function() {
     Route::get('/moderator_new_items', function() { return view('moderator.new-items'); })->name('moderator_new_items');
+    // Approve new bench
+    Route::get('/moderator_new_items/bench/{id}/{approve}', function($id, $approve) {
+        $bench = Bench::find($id);
+        return $bench->approveNew($id, $approve);
+    })->name('bench.approve');
 });
 
 // Admin Routes
