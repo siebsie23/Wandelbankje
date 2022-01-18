@@ -39,6 +39,11 @@
                                 {{ __('Gebruikers') }}
                             </x-nav-link>
                         @endif
+                        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'moderator')
+                            <x-nav-link :href="route('moderator_new_items')" :active="request()->routeIs('moderator_new_items')">
+                                {{ __('Nieuwe Items') }}
+                            </x-nav-link>
+                        @endif
                     @else
                     <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
                         {{ __('Inloggen') }}
@@ -114,6 +119,11 @@
                 @if(Auth::user()->role == 'admin')
                     <x-responsive-nav-link :href="route('admin_users')" :active="request()->routeIs('admin_users')">
                         {{ __('Gebruikers') }}
+                    </x-responsive-nav-link>
+                @endif
+                @if(Auth::user()->role == 'admin' || Auth::user()->role == 'moderator')
+                    <x-responsive-nav-link :href="route('moderator_new_items')" :active="request()->routeIs('moderator_new_items')">
+                        {{ __('Nieuwe Items') }}
                     </x-responsive-nav-link>
                 @endif
                 @endif
