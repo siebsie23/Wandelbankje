@@ -43,4 +43,29 @@ class Bench extends Model
         }
         return redirect(route('bench.details', $id));
     }
+
+    public function approveNew($id, $approve) {
+        $bench = Bench::find($id);
+        if($bench->is_new) {
+            if($approve) {
+                $bench->is_new = false;
+                $bench->save();
+            }else {
+                $bench->delete();
+            }
+        }
+        return redirect(route('moderator_new_items'));
+    }
+
+    public function reset($id, $report_id, $reset) {
+        $alert = 'Aantal keer gerapporteerd gereset!';
+        $report = ReportedBench::find($report_id);
+        $report->delete();
+        if(!$reset) {
+            $bench = Bench::find($id);
+            $bench->delete();
+            $alert = 'Bankje succesvol verwijderd!';
+        }
+        return redirect(route('moderator_reported_items'))->with('alert', $alert);
+    }
 }

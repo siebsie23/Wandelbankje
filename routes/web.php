@@ -70,6 +70,24 @@ Route::get('/dashboard', function () {
 Route::get('/moderator_dashboard', 'App\Http\Controllers\Moderator\DashboardController@index')->middleware('role:moderator')->name('moderator_dashboard');
 Route::get('/user_dashboard', 'App\Http\Controllers\User\DashboardController@index')->middleware('role:user')->name('user_dashboard');
 
+// Moderator Routes
+Route::group(['middleware' => 'role:moderator'], function() {
+    Route::get('/moderator_new_items', function() { return view('moderator.new-items'); })->name('moderator_new_items');
+    Route::get('/moderator_reported_items', function() { return view('moderator.reported-items'); })->name('moderator_reported_items');
+
+    // Approve new bench
+    Route::get('/moderator_new_items/bench/{id}/{approve}', function($id, $approve) {
+        $bench = Bench::find($id);
+        return $bench->approveNew($id, $approve);
+    })->name('bench.approve');
+
+    // Reset reported bench
+    Route::get('/moderator_reported_items/bench/{id}/{report_id}/{reset}', function($id, $report_id, $reset) {
+        $bench = Bench::find($id);
+        return $bench->reset($id, $report_id, $reset);
+    })->name('bench.reset');
+});
+
 // Admin Routes
 Route::group(['middleware' => 'role:admin'], function() {
     Route::get('/admin_dashboard', 'App\Http\Controllers\Admin\DashboardController@index')->name('admin_dashboard');
