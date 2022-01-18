@@ -31,7 +31,7 @@
                                     <div class="mt-2 sm:flex sm:justify-between">
                                         <div class="sm:flex">
                                             <p class="flex items-center text-sm font-light text-gray-500">
-                                                {{ $bench->latitude . ' ' . $bench->longitude }}
+                                                {{ $bench->latitude . ' ' . $bench->longitude }} | Added by: {{ \App\Models\User::find($bench->added_by)->email }}
                                             </p>
                                         </div>
                                     </div>
