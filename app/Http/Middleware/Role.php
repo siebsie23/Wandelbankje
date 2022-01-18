@@ -16,6 +16,8 @@ class Role {
             return $next($request);
         else if($role == 'any')
             return $next($request);
+        else if($user->role == 'admin' && $role == 'moderator')
+            return $next($request);
 
         return redirect('/');
     }
