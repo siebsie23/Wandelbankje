@@ -43,6 +43,9 @@
                             <x-nav-link :href="route('moderator_new_items')" :active="request()->routeIs('moderator_new_items')">
                                 {{ __('Nieuwe Items') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('moderator_reported_items')" :active="request()->routeIs('moderator_reported_items')">
+                                {{ __('Gerapporteerde Items') }}
+                            </x-nav-link>
                         @endif
                     @else
                     <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
@@ -125,6 +128,9 @@
                     <x-responsive-nav-link :href="route('moderator_new_items')" :active="request()->routeIs('moderator_new_items')">
                         {{ __('Nieuwe Items') }}
                     </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('moderator_reported_items')" :active="request()->routeIs('moderator_reported_items')">
+                        {{ __('Gerapporteerde Items') }}
+                    </x-responsive-nav-link>
                 @endif
                 @endif
 
@@ -160,4 +166,5 @@
                 @endif
             </div>
         </div>
+    </div>
 </nav>

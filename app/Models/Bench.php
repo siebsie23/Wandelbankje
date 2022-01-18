@@ -56,4 +56,16 @@ class Bench extends Model
         }
         return redirect(route('moderator_new_items'));
     }
+
+    public function reset($id, $report_id, $reset) {
+        $alert = 'Aantal keer gerapporteerd gereset!';
+        $report = ReportedBench::find($report_id);
+        $report->delete();
+        if(!$reset) {
+            $bench = Bench::find($id);
+            $bench->delete();
+            $alert = 'Bankje succesvol verwijderd!';
+        }
+        return redirect(route('moderator_reported_items'))->with('alert', $alert);
+    }
 }
