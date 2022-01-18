@@ -69,6 +69,7 @@ class BenchController extends Controller
                                     )
                                 ) AS distance
                                 FROM benches
+                                WHERE is_new = 0
                                 HAVING distance < 5
                                 ORDER BY distance
                                 LIMIT 0 , 5"));
@@ -87,6 +88,7 @@ class BenchController extends Controller
                                     )
                                 ) AS distance
                                 FROM benches
+                                WHERE is_new = 0
                                 ORDER BY distance"));
         return response()->json($benches, 200);
     }
