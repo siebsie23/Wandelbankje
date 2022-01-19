@@ -3,9 +3,10 @@ function readURL(input) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-            $('#category-img-tag').removeClass('hidden');
+            imgtag =  $('#category-img-tag')
+            imgtag.removeClass('hidden');
             $('#selector').addClass('hidden');
-            $('#category-img-tag').attr('src', e.target.result);
+            imgtag.attr('src', e.target.result);
         }
 
         reader.readAsDataURL(input.files[0]);
