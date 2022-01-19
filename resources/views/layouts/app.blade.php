@@ -54,6 +54,7 @@
             @break
         @case('bankjestoevoegen')
             <script src="{{ asset('js/add_bench.js') }}"></script>
+            <script src="{{ asset('js/preview_image.js') }}"></script>
             @break
     @endswitch
 </html>

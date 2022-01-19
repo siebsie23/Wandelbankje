@@ -16,7 +16,8 @@ class CreatePhotosTable extends Migration
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
             $table->string('path');
-            $table->foreignId('bench')->references('id')->on('benches')->onDelete('cascade');;
+            $table->foreignId('bench')->references('id')->on('benches')->onDelete('cascade');
+            $table->boolean('is_new')->default(true);
             $table->timestamps();
         });
     }
