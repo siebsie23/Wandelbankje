@@ -125,7 +125,7 @@ class BenchController extends Controller
         // Image processing
         if(isset($request->image)) {
             $request->validate([
-                'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+                'image' => 'required|image|mimes:jpg,png,jpeg|max:15000',
             ]);
 
             $imageName = time() . '.' . $request->image->extension();
@@ -147,7 +147,7 @@ class BenchController extends Controller
     public function add_photo(Request $request) {
         // Image processing
         $request->validate([
-            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:15000',
         ]);
 
         $imageName = time() . '.' . $request->image->extension();
