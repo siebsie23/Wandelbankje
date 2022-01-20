@@ -132,6 +132,9 @@ class BenchController extends Controller
 
             // Add watermark
             $img = \Intervention\Image\Facades\Image::make($request->image);
+            $img->resize(1000, 1000, function ($constraint) {
+                $constraint->aspectRatio();
+            });
             $img->insert(public_path('images/watermark.png'), 'bottom-right', 10, 10);
             $img->save(public_path('images/benches/' . $imageName));
 
