@@ -133,6 +133,7 @@ class BenchController extends Controller
             $save = new Photo;
             $save->bench = $bench->id;
             $save->path = $imageName;
+            $save->added_by = Auth::id();
             $save->save();
         }
         return redirect(route('welcome'))->with('alert', 'Bankje succesvol toegevoegd!');
@@ -150,6 +151,7 @@ class BenchController extends Controller
         $save = new Photo;
         $save->bench = $request->bench;
         $save->path = $imageName;
+        $save->added_by = Auth::id();
         $save->save();
         return redirect(route('bench.details', $request->bench))->with('alert', 'Foto succesvol ingezonden!');
     }

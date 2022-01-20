@@ -17,6 +17,7 @@ class CreatePhotosTable extends Migration
             $table->id();
             $table->string('path');
             $table->foreignId('bench')->references('id')->on('benches')->onDelete('cascade');
+            $table->foreignId('added_by')->references('id')->on('users')->onDelete('cascade');
             $table->boolean('is_new')->default(true);
             $table->timestamps();
         });

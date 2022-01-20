@@ -3,6 +3,7 @@
 use App\Http\Controllers\BenchController;
 use App\Http\Controllers\Bankjeslocation;
 use App\Models\Bench;
+use App\Models\Photo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,6 +90,12 @@ Route::group(['middleware' => 'role:moderator'], function() {
         $bench = Bench::find($id);
         return $bench->approveNew($id, $approve);
     })->name('bench.approve');
+
+    // Approve new photo
+    Route::get('/moderator_new_items/photo/{id}/{approve}', function($id, $approve) {
+        $photo = Photo::find($id);
+        return $photo->approveNew($id, $approve);
+    })->name('photo.approve');
 
     // Reset reported bench
     Route::get('/moderator_reported_items/bench/{id}/{report_id}/{reset}', function($id, $report_id, $reset) {
