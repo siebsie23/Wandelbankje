@@ -1,8 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-    content: ['./src/**/*.{html,js}', './node_modules/tw-elements/dist/js/**/*.js'],
-
     purge: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
@@ -25,6 +23,5 @@ module.exports = {
 
     plugins: [
         require('@tailwindcss/forms'),
-        require('tw-elements/dist/plugin')
     ],
 };

@@ -23,7 +23,7 @@
 
                     <div id="carouselExampleControls" class="carousel slide relative" data-bs-ride="carousel">
                         <div class="carousel-inner relative w-full overflow-hidden">
-                            @foreach(\App\Models\Photo::where('bench', $bench->id)->get() as $photo)
+                            @foreach(\App\Models\Photo::where('bench', $bench->id)->where('is_new', false)->get() as $photo)
                                 @php
                                     $hasPhotos = true;
                                     if($it == 0)

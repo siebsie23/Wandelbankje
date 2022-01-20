@@ -138,4 +138,20 @@ class BenchController extends Controller
         return redirect(route('welcome'))->with('alert', 'Bankje succesvol toegevoegd!');
     }
 
+    public function add_photo(Request $request) {
+        // Image processing
+        $request->validate([
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+        ]);
+
+        $imageName = time() . '.' . $request->image->extension();
+
+        $request->image->move(public_path('images/benches'), $imageName);
+        $save = new Photo;
+        $save->bench = $request->bench;
+        $save->path = $imageName;
+        $save->save();
+        return redirect(route('bench.details', $request->bench))->with('alert', 'Foto succesvol ingezonden!');
+    }
+
 }
