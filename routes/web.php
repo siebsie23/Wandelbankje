@@ -3,6 +3,7 @@
 use App\Http\Controllers\BenchController;
 use App\Http\Controllers\Bankjeslocation;
 use App\Models\Bench;
+use App\Models\Photo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,11 +47,20 @@ Route::get('/report/{id}', function($id) {
         ->with('address', BenchController::getReverseLocationAddress($bench->latitude, $bench->longitude));
 })->name('bench.report');
 
+Route::get('/addphoto/{id}', function($id) {
+    $bench = Bench::find($id);
+    return view('bench.addphoto')->with('bench', $bench)
+        ->with('address', BenchController::getReverseLocationAddress($bench->latitude, $bench->longitude));
+})->name('bench.addphoto');
+
 Route::post('/report/{id}', [BenchController::class, 'report'])
     ->name('bench.postreport');
 
 Route::post('/add_bench', [BenchController::class, 'add_bench'])
     ->name('bench.add');
+
+Route::post('/post_photo', [BenchController::class, 'add_photo'])
+    ->name('bench.post');
 
 // Only accessible by registered users.
 Route::get('/dashboard', function () {
@@ -80,6 +90,12 @@ Route::group(['middleware' => 'role:moderator'], function() {
         $bench = Bench::find($id);
         return $bench->approveNew($id, $approve);
     })->name('bench.approve');
+
+    // Approve new photo
+    Route::get('/moderator_new_items/photo/{id}/{approve}', function($id, $approve) {
+        $photo = Photo::find($id);
+        return $photo->approveNew($id, $approve);
+    })->name('photo.approve');
 
     // Reset reported bench
     Route::get('/moderator_reported_items/bench/{id}/{report_id}/{reset}', function($id, $report_id, $reset) {

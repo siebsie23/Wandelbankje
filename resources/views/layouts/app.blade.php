@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Styles -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
         <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
@@ -43,6 +44,7 @@
                 {{ $slot }}
             </main>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
     </body>
     <script src="{{ asset('js/geolocation.js') }}"></script>
     @switch(Route::current()->getName())
@@ -54,6 +56,10 @@
             @break
         @case('bankjestoevoegen')
             <script src="{{ asset('js/add_bench.js') }}"></script>
+            <script src="{{ asset('js/preview_image.js') }}"></script>
+            @break
+        @case('bench.addphoto')
+            <script src="{{ asset('js/preview_image.js') }}"></script>
             @break
     @endswitch
 </html>

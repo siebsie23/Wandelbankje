@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Bench;
 use App\Models\LikedBench;
+use App\Models\Photo;
 use App\Models\ReportedBench;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\Image;
 
 class BenchController extends Controller
 {
@@ -114,12 +116,53 @@ class BenchController extends Controller
     }
 
     public function add_bench(Request $request) {
-        Bench::create([
+        $bench = Bench::create([
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'added_by' => Auth::id(),
         ]);
+
+        // Image processing
+        if(isset($request->image)) {
+            $request->validate([
+                'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            ]);
+
+            $imageName = time() . '.' . $request->image->extension();
+
+            // Add watermark
+            $img = \Intervention\Image\Facades\Image::make($request->image);
+            $img->insert(public_path('images/watermark.png'), 'bottom-right', 10, 10);
+            $img->save(public_path('images/benches/' . $imageName));
+
+            $save = new Photo;
+            $save->bench = $bench->id;
+            $save->path = $imageName;
+            $save->added_by = Auth::id();
+            $save->save();
+        }
         return redirect(route('welcome'))->with('alert', 'Bankje succesvol toegevoegd!');
+    }
+
+    public function add_photo(Request $request) {
+        // Image processing
+        $request->validate([
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+        ]);
+
+        $imageName = time() . '.' . $request->image->extension();
+
+        // Add watermark
+        $img = \Intervention\Image\Facades\Image::make($request->image);
+        $img->insert(public_path('images/watermark.png'), 'bottom-right', 10, 10);
+        $img->save(public_path('images/benches/' . $imageName));
+
+        $save = new Photo;
+        $save->bench = $request->bench;
+        $save->path = $imageName;
+        $save->added_by = Auth::id();
+        $save->save();
+        return redirect(route('bench.details', $request->bench))->with('alert', 'Foto succesvol ingezonden!');
     }
 
 }

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Bankje toevoegen') }}
+            {{ __('Foto toevoegen') }}
         </h2>
     </x-slot>
     <div class="py-12">
@@ -10,7 +10,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="flex items-center">
                         <!-- Account form -->
-                        <form method="POST" action="{{ route('bench.add') }}" enctype="multipart/form-data" class="mx-auto w-full max-w-lg">
+                        <form method="POST" action="{{ route('bench.post') }}" enctype="multipart/form-data" class="mx-auto w-full max-w-lg">
                             <div class="flex flex-wrap -mx-3 mb-6">
                                 <div class="w-full px-3 mb-6 md:mb-0">
                                     <!-- Validation Errors -->
@@ -18,11 +18,10 @@
                                 </div>
                             </div>
                             @csrf
-                            <input type="hidden" id="latitude" name="latitude">
-                            <input type="hidden" id="longitude" name="longitude">
+                            <input type="hidden" id="bench" name="bench" value="{{$bench->id}}">
                             <div>
-                                <h2 class="text-lg -leading-10" id="adress">Adres</h2>
-                                <p class="flex items-center text-sm font-light text-gray-500" id="coordinates">coordinaten</p>
+                                <h2 class="text-lg -leading-10" id="adress">{{ $address }}</h2>
+                                <p class="flex items-center text-sm font-light text-gray-500" id="coordinates">{{ $bench->latitude . ' ' . $bench->longitude }}</p>
                             </div>
                             <hr/>
                             <div class="grid grid-cols-1 mt-5 mx-7">
@@ -44,7 +43,7 @@
                             <div class="flex flex-wrap -mx-3 mb-2">
                                 <div class="flex grid grid-cols-2 w-full">
                                     <div class="w-full flex justify-center">
-                                        <a href="{{ route('dashboard') }}" class="ml-1 mr-1 p-2 pl-5 pr-5 transition-colors duration-700 transform bg-red-500 hover:bg-red-400 text-gray-100 text-lg rounded-lg focus:border-4 border-red-300 flex justify-center w-full">
+                                        <a href="{{ route('bench.details', $bench->id) }}" class="ml-1 mr-1 p-2 pl-5 pr-5 transition-colors duration-700 transform bg-red-500 hover:bg-red-400 text-gray-100 text-lg rounded-lg focus:border-4 border-red-300 flex justify-center w-full">
                                             Annuleren
                                         </a>
                                     </div>
