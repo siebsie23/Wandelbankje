@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\Image;
 
 class BenchController extends Controller
 {
@@ -129,7 +130,11 @@ class BenchController extends Controller
 
             $imageName = time() . '.' . $request->image->extension();
 
-            $request->image->move(public_path('images/benches'), $imageName);
+            // Add watermark
+            $img = \Intervention\Image\Facades\Image::make($request->image);
+            $img->insert(public_path('images/watermark.png'), 'bottom-right', 10, 10);
+            $img->save(public_path('images/benches/' . $imageName));
+
             $save = new Photo;
             $save->bench = $bench->id;
             $save->path = $imageName;
@@ -147,7 +152,11 @@ class BenchController extends Controller
 
         $imageName = time() . '.' . $request->image->extension();
 
-        $request->image->move(public_path('images/benches'), $imageName);
+        // Add watermark
+        $img = \Intervention\Image\Facades\Image::make($request->image);
+        $img->insert(public_path('images/watermark.png'), 'bottom-right', 10, 10);
+        $img->save(public_path('images/benches/' . $imageName));
+
         $save = new Photo;
         $save->bench = $request->bench;
         $save->path = $imageName;
