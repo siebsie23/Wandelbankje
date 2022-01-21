@@ -48,7 +48,7 @@ Route::get('/report/{id}', function($id) {
 })->name('bench.report');
 
 Route::get('/addphoto/{id}', function($id) {
-    if(!Auth::hasUser())
+    if(!isset(Auth::user()->name))
         return redirect(route('bench.details', $id))->with('alert', 'Je moet ingelogd zijn om een foto toe te voegen!');
     $bench = Bench::find($id);
     return view('bench.addphoto')->with('bench', $bench)
