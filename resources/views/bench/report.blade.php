@@ -11,15 +11,21 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     @php
                         $hasPhotos = false;
+                        $it = 0;
                     @endphp
 
                     <div id="carouselExampleControls" class="carousel slide relative" data-bs-ride="carousel">
                         <div class="carousel-inner relative w-full overflow-hidden">
                             @foreach(\App\Models\Photo::where('bench', $bench->id)->get() as $photo)
                                 @php
-                                    $hasPhotos = true
+                                    $hasPhotos = true;
+                                    if($it == 0)
+                                        $active = 'active ';
+                                    else
+                                        $active = '';
+                                    $it++;
                                 @endphp
-                                <div class="carousel-item active relative float-left w-full">
+                                <div class="carousel-item {{ $active }}relative float-left w-full">
                                     <img
                                         src="{{ asset('images/benches/' . $photo->path) }}"
                                         class="block w-full object-cover"
