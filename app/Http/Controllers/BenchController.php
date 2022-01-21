@@ -171,4 +171,14 @@ class BenchController extends Controller
         return redirect(route('bench.details', $request->bench))->with('alert', 'Foto succesvol ingezonden!');
     }
 
+    public function delete_bench($user_id, $bench_id) {
+        $bench = Bench::find($bench_id);
+        if($bench->added_by == $user_id) {
+            $bench->delete();
+        }else {
+            return redirect(route('dashboard'))->with('alert', 'Kon bankje niet verwijderen!');
+        }
+        return redirect(route('dashboard'))->with('alert', 'Bankje verwijderd!');
+    }
+
 }

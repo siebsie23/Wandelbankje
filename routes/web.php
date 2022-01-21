@@ -62,6 +62,10 @@ Route::post('/add_bench', [BenchController::class, 'add_bench'])
 Route::post('/post_photo', [BenchController::class, 'add_photo'])
     ->name('bench.post');
 
+Route::get('/delete_bench/{id}', function($id) {
+    return BenchController::delete_bench(Auth::id(), $id);
+})->middleware('role:any')->name('bench.delete');
+
 // Only accessible by registered users.
 Route::get('/dashboard', function () {
     $role = Auth::user()->role;
