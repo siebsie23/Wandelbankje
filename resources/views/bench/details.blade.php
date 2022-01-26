@@ -8,6 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <!-- Melding notificatie -->
                 @if (session('alert'))
                     <div class="text-center py-4 lg:px-4">
                         <div class="p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
@@ -16,6 +17,7 @@
                     </div>
                 @endif
                 <div class="p-6 bg-white border-b border-gray-200">
+                    <!-- PHP code voor het laten zien van foto's -->
                     @php
                         $hasPhotos = false;
                         $it = 0;
@@ -23,6 +25,7 @@
 
                     <div id="carouselExampleControls" class="carousel slide relative" data-bs-ride="carousel">
                         <div class="carousel-inner relative w-full overflow-hidden">
+                            <!-- Foto's -->
                             @foreach(\App\Models\Photo::where('bench', $bench->id)->where('is_new', false)->get() as $photo)
                                 @php
                                     $hasPhotos = true;
@@ -40,6 +43,7 @@
                                     />
                                 </div>
                             @endforeach
+                            <!-- Geen foto's voor dit bankje -->
                             @if(!$hasPhotos)
                                     <div class="carousel-item active relative float-left w-full">
                                         <img

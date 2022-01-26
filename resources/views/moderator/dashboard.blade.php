@@ -7,6 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Melding notificatie -->
             @if (session('alert'))
                 <div class="text-center py-4 lg:px-4">
                     <div class="p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
@@ -17,6 +18,7 @@
             <h1 class="text-xl">Door jou toegevoegde bankjes</h1>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
+                    <!-- Lijst met bankjes toegevoegd door gebruiker -->
                     <ul id="bench-list" class="divide-y divide-gray-200">
                         @foreach(\App\Models\Bench::where('added_by', \Illuminate\Support\Facades\Auth::id())->get() as $bench)
                             <li>

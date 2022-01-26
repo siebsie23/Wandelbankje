@@ -16,6 +16,15 @@ use Intervention\Image\Image;
 class BenchController extends Controller
 {
 
+    /**
+     *
+     * Deze functie geeft de adresgegevens in een array van de opgegeven coördinaten terug en slaat deze op
+     * in de website cache in het geval dat deze er nog niet in staan.
+     *
+     * @param $latitude
+     * @param $longitude
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function getReverseLocation($latitude, $longitude) {
         $item = Cache::get('rawLocation' . $latitude . $longitude);
         if(isset($item)) {
@@ -32,6 +41,15 @@ class BenchController extends Controller
         echo $res->getBody();
     }
 
+    /**
+     *
+     * Deze functie geeft het adres van de opgegeven coördinaten terug in de vorm van een string.
+     *
+     * @param $latitude
+     * @param $longitude
+     * @return string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function getReverseLocationAddress($latitude, $longitude) {
         $item = Cache::get('addressLocation' . $latitude . $longitude);
         $name = $subdistrict = $district = '';
@@ -59,6 +77,14 @@ class BenchController extends Controller
         return $name . ' ' . $subdistrict . ', ' . $district;
     }
 
+    /**
+     *
+     * Deze functie geeft een json array met bankjes in de omgeving van de opgegeven coördinaten terug.
+     *
+     * @param $latitude
+     * @param $longitude
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function benchesInArea($latitude, $longitude) {
         $benches = DB::select(DB::raw("SELECT
                                     id, latitude, longitude, (
@@ -78,6 +104,14 @@ class BenchController extends Controller
         return response()->json($benches, 200);
     }
 
+    /**
+     *
+     * Deze functie geeft alle bankjes in de database terug in de vorm van een json array.
+     *
+     * @param $latitude
+     * @param $longitude
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function benchesGlobal($latitude, $longitude) {
         $benches = DB::select(DB::raw("SELECT
                                     id, latitude, longitude, (
@@ -95,10 +129,27 @@ class BenchController extends Controller
         return response()->json($benches, 200);
     }
 
+    /**
+     *
+     * Deze functie haalt het bankje op specifieke coördinaten op. Als er geen bankje op de opgegeven
+     * coördinaten staat zal er een 'null' terug worden gegeven.
+     *
+     * @param $latitude
+     * @param $longitude
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|object|null
+     */
     public function getBenchAtCoordinates($latitude, $longitude) {
         return DB::table('benches')->where('latitude', $latitude)->where('longitude', $longitude)->first();
     }
 
+    /**
+     *
+     * Deze functie maakt een nieuwe report aan op een bankje.
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function report(Request $request, $id) {
         $reportedbench = ReportedBench::where('bench', $id)->where('reason', $request->radio);
         if(!$reportedbench->exists()) {
@@ -115,6 +166,13 @@ class BenchController extends Controller
         return redirect(route('bench.details', $id))->with('alert', 'Bankje succesvol gerapporteerd!');
     }
 
+    /**
+     *
+     * Deze functie voegt een nieuw bankje toe aan de database en eventueel met een afbeelding.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function add_bench(Request $request) {
         $bench = Bench::create([
             'latitude' => $request->latitude,
@@ -147,6 +205,13 @@ class BenchController extends Controller
         return redirect(route('welcome'))->with('alert', 'Bankje succesvol toegevoegd!');
     }
 
+    /**
+     *
+     * Deze functie voegt een afbeelding toe aan een bestaand bankje.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function add_photo(Request $request) {
         // Image processing
         $request->validate([
@@ -171,6 +236,14 @@ class BenchController extends Controller
         return redirect(route('bench.details', $request->bench))->with('alert', 'Foto succesvol ingezonden!');
     }
 
+    /**
+     *
+     * Deze functie verwijdert een bankje als de opgegeven gebruiker het bankje heeft toegevoegd.
+     *
+     * @param $user_id
+     * @param $bench_id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function delete_bench($user_id, $bench_id) {
         $bench = Bench::find($bench_id);
         if($bench->added_by == $user_id) {

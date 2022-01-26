@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <ul id="bench-list" class="divide-y divide-gray-200">
-                        <!-- New Benches -->
+                        <!-- Nieuwe bankjes -->
                         @foreach(\App\Models\Bench::where('is_new', true)->get() as $bench)
                             <li>
                                 <div class="px-4 py-4 sm:px-6">
@@ -40,7 +40,7 @@
                             </li>
                         @endforeach
 
-                        <!-- New Photos -->
+                        <!-- Nieuwe foto's -->
                         @foreach(\App\Models\Photo::where('is_new', true)->get() as $photo)
                             <li>
                                 <div class="px-4 py-4 sm:px-6">

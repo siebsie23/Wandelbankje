@@ -17,11 +17,12 @@
                             </a>
                         </div>
                         <div class="w-full flex justify-center">
+                            <!-- Gebruiker verwijderen form-->
                             <form method="POST" action="{{ route('admin_users_destroy', $user->id) }}" class="w-full flex justify-center">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="ml-1 mr-1 p-2 pl-5 pr-5 transition-colors duration-700 transform bg-indigo-500 hover:bg-indigo-400 text-gray-100 text-lg rounded-lg focus:border-4 border-indigo-300 flex justify-center w-full">
-                                    Opslaan
+                                    Verwijderen
                                 </button>
                             </form>
                         </div>

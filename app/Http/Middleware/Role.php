@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Role {
 
+    // Check the users role and continue if the role is allowed to.
     public function handle($request, Closure $next, String $role) {
         if(!Auth::check())
             return redirect('/');

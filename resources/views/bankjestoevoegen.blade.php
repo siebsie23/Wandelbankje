@@ -9,7 +9,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="flex items-center">
-                        <!-- Account form -->
+                        <!-- Bankjes form -->
                         <form method="POST" action="{{ route('bench.add') }}" enctype="multipart/form-data" class="mx-auto w-full max-w-lg">
                             <div class="flex flex-wrap -mx-3 mb-6">
                                 <div class="w-full px-3 mb-6 md:mb-0">
@@ -28,7 +28,7 @@
                             <div class="grid grid-cols-1 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold mb-1">Foto toevoegen</label>
                                 <div class='flex items-center justify-center w-full'>
-                                    <!--for preview purpose -->
+                                    <!--Voor afbeelding preview -->
                                     <img src="#" id="category-img-tag" class="hidden flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-purple-300 group" />
 
                                     <label id="selector" class='flex flex-col border-4 border-dashed w-full h-32 hover:bg-gray-100 hover:border-purple-300 group'>

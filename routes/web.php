@@ -21,7 +21,7 @@ use Stevebauman\Location\Facades\Location;
 |
 */
 
-// Pages accessible by unregistered users.
+// Pagina's zichtbaar voor ongeregistreerde gebruikers
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
@@ -47,17 +47,11 @@ Route::get('/report/{id}', function($id) {
         ->with('address', BenchController::getReverseLocationAddress($bench->latitude, $bench->longitude));
 })->name('bench.report');
 
-Route::get('/addphoto/{id}', function($id) {
-    if(!isset(Auth::user()->name))
-        return redirect(route('bench.details', $id))->with('alert', 'Je moet ingelogd zijn om een foto toe te voegen!');
-    $bench = Bench::find($id);
-    return view('bench.addphoto')->with('bench', $bench)
-        ->with('address', BenchController::getReverseLocationAddress($bench->latitude, $bench->longitude));
-})->name('bench.addphoto');
-
 Route::post('/report/{id}', [BenchController::class, 'report'])
     ->name('bench.postreport');
 
+
+// Pagina's alleen voor geregistreerde gebruikers
 Route::post('/add_bench', [BenchController::class, 'add_bench'])
     ->name('bench.add');
 
@@ -68,7 +62,14 @@ Route::get('/delete_bench/{id}', function($id) {
     return BenchController::delete_bench(Auth::id(), $id);
 })->middleware('role:any')->name('bench.delete');
 
-// Only accessible by registered users.
+Route::get('/addphoto/{id}', function($id) {
+    if(!isset(Auth::user()->name))
+        return redirect(route('bench.details', $id))->with('alert', 'Je moet ingelogd zijn om een foto toe te voegen!');
+    $bench = Bench::find($id);
+    return view('bench.addphoto')->with('bench', $bench)
+        ->with('address', BenchController::getReverseLocationAddress($bench->latitude, $bench->longitude));
+})->name('bench.addphoto');
+
 Route::get('/dashboard', function () {
     $role = Auth::user()->role;
     switch($role) {
